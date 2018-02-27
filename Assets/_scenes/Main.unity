@@ -322,6 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 1
   wall: {fileID: 1190660446638414, guid: 7b7744af89240bb4faf14f46ffc506df, type: 2}
+  exitTile: {fileID: 1965201641737962, guid: 80e43fac78d87004383b07986d677581, type: 2}
   sine: {fileID: 1633814185251210, guid: 7ee1ce5ce62ff8744bd278bc43b902c7, type: 2}
   length: 200
   useRandomSeed: 0

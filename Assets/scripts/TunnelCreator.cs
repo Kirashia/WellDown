@@ -7,6 +7,7 @@ public class TunnelCreator : MonoBehaviour {
 
     public string seed;
     public GameObject wall;
+    public GameObject exitTile;
     public GameObject sine;
     public int length;
     public bool useRandomSeed;
@@ -14,6 +15,7 @@ public class TunnelCreator : MonoBehaviour {
 
     private System.Random prng;
 
+    // Main calling function
     public void CreateSineTunnel()
     {
         if (useRandomSeed || seed == "")
@@ -28,7 +30,10 @@ public class TunnelCreator : MonoBehaviour {
             CarveTunnel(
                 MakeTunnelArray(length), GetSinePattern()
             )
-        );      
+        );
+
+        GenerateBorders();
+        GenerateExit();
 
     }
 
@@ -54,7 +59,6 @@ public class TunnelCreator : MonoBehaviour {
         return sinePattern;
     }
     
-
     // Sets up the initial array of specified length
     int[,] MakeTunnelArray(int length)
     {
@@ -132,6 +136,59 @@ public class TunnelCreator : MonoBehaviour {
                 }
             }
         }
+    }
+
+    // Generate borders around map
+    void GenerateBorders()
+    {
+        // Borders on sides
+        for(int i = 0; i < length; i++)
+        {
+            GameObject tile = Instantiate(wall, new Vector3(-1, i, 0), Quaternion.identity) as GameObject;
+            tile.name = "Wall";
+            tile = Instantiate(wall, new Vector3(9, i, 0), Quaternion.identity) as GameObject;
+            tile.name = "Wall";
+        }
+    }
+
+    // Places the exit tiles
+    void GenerateExit()
+    {
+        int[,] exit = new int[9,6];
+
+        for (int x = 0; x < exit.GetLength(0); x++)
+        {
+            for (int y = 0; y < exit.GetLength(1); y++)
+            {
+                exit[x, y] = 0;
+            }
+        }
+
+        exit[0, 1] = 1;
+        exit[1, 2] = 1;
+        exit[2, 3] = 1;
+        exit[2, 4] = 1;
+        exit[2, 5] = 1;
+        exit[6, 5] = 1;
+        exit[6, 4] = 1;
+        exit[6, 3] = 1;
+        exit[7, 2] = 1;
+        exit[8, 1] = 1;
+
+        Instantiate(exitTile, new Vector3(4f, -4f, 0f), Quaternion.identity);
+
+        for (int x = 0; x < exit.GetLength(0); x++)
+        {
+            for (int y = 0; y < exit.GetLength(1); y++)
+            {
+                if (exit[x, y] == 1)
+                {
+                    GameObject tile = Instantiate(wall, new Vector3(x, -y, 0), Quaternion.identity) as GameObject;
+                    tile.name = x + ", " + y;
+                }
+            }
+        }
+
     }
 
     // Returns false if the coordinate does not exist on the map
