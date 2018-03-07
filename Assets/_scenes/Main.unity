@@ -467,7 +467,10 @@ MonoBehaviour:
   waitForSeconds: 0.1
   weaponCooldown: 0
   weaponEnergy: 8
+<<<<<<< HEAD
   attack: {fileID: 1362819782713214, guid: f2c9daea5271e78489e1c2f9004c160b, type: 2}
+=======
+>>>>>>> 4c38e4a2c12e84b42586073abaf09a7569eae069
   canAttack: 1
   energy: 0
 --- !u!1001 &1518778845
