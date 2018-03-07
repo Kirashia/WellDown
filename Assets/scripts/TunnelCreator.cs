@@ -9,6 +9,7 @@ public class TunnelCreator : MonoBehaviour {
     public GameObject wall;
     public GameObject exitTile;
     public GameObject sine;
+    public GameObject platform;
     public int length;
     public bool useRandomSeed;
     [Range(0, 100)] public int randomFill;
@@ -27,14 +28,67 @@ public class TunnelCreator : MonoBehaviour {
 
         // A little bit of functional (ish) programming ;) 
         InstantiateTiles(
-            CarveTunnel(
-                MakeTunnelArray(length), GetSinePattern()
+            FixOpenAreas(
+                CarveTunnel(
+                    MakeTunnelArray(length), GetSinePattern()
+                )
             )
         );
 
         GenerateBorders();
         GenerateExit();
 
+    }
+
+    int[,] FixOpenAreas(int[,] v)
+    {
+        int prevScore = 0;
+        int currentScore = 0;
+        int repeat = 0;
+        bool canPlace = false;
+        int start = 0; ;
+
+        for (int y = 0; y < v.GetLength(1) - 50; y++)
+        {
+            for (int x = 0; x < v.GetLength(0); x++)
+            {
+                int place = 0;
+                if (v[x,y] == 0)
+                {
+                    if (currentScore == 0)
+                        start = x;
+
+                    currentScore++;
+                }
+            }
+            if (prevScore == currentScore && prevScore > 0 && currentScore > 0)
+            {
+                repeat++;
+                canPlace = true;
+                if (repeat > 3 && OneIn(10))
+                {
+                    int randomLength = prng.Next(1, currentScore - 2);
+                    int randomStart = prng.Next(start, start + (9 - currentScore));
+                    for (int i = 0; i < randomLength; i++)
+                    {
+                        v[randomStart + i, y] = 2;
+                        //GameObject tile = Instantiate(platform, new Vector3(i, y, 0), Quaternion.identity) as GameObject;
+                        //tile.name = "platform";
+                    }
+                    repeat = 0;
+                    prevScore = 0;
+                }
+            }
+            else
+            {
+                repeat = 0;
+                canPlace = false;
+            }
+            prevScore = currentScore;
+            currentScore = 0;
+        }
+
+        return v;
     }
 
     // Gets all points on a sine curve
@@ -62,10 +116,15 @@ public class TunnelCreator : MonoBehaviour {
     // Sets up the initial array of specified length
     int[,] MakeTunnelArray(int length)
     {
-        int[,] tunnel = new int[9, length];
-        for (int x = 0; x < tunnel.GetLength(0); x++)
+        int[,] tunnel = new int[9, length + 50];
+
+        tunnel[3, length + 5] = 2;
+        tunnel[4, length + 5] = 2;
+        tunnel[5, length + 5] = 2;
+
+        for (int x = 0; x < 9; x++)
         {
-            for (int y = 0; y < tunnel.GetLength(1); y++)
+            for (int y = 0; y < length; y++)
             {
                 tunnel[x, y] = 1;
             }
@@ -134,6 +193,11 @@ public class TunnelCreator : MonoBehaviour {
                     GameObject tile = Instantiate(wall, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
                     tile.name = x + ", " + y;
                 }
+                else if (tunnel[x, y] == 2)
+                {
+                    GameObject tile = Instantiate(platform, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
+                    tile.name = x + ", " + y;
+                }
             }
         }
     }
@@ -142,7 +206,7 @@ public class TunnelCreator : MonoBehaviour {
     void GenerateBorders()
     {
         // Borders on sides
-        for(int i = 0; i < length; i++)
+        for(int i = 0; i < length + 50; i++)
         {
             GameObject tile = Instantiate(wall, new Vector3(-1, i, 0), Quaternion.identity) as GameObject;
             tile.name = "Wall";
@@ -191,6 +255,42 @@ public class TunnelCreator : MonoBehaviour {
 
     }
 
+    void GenerateEntrance()
+    {
+        int[,] entrance = new int[9, 6];
+
+        for (int x = 0; x < entrance.GetLength(0); x++)
+        {
+            for (int y = 0; y < entrance.GetLength(1); y++)
+            {
+                entrance[x, y] = 0;
+            }
+        }
+
+        entrance[0, 1] = 1;
+        entrance[1, 2] = 1;
+        entrance[2, 3] = 1;
+        entrance[2, 4] = 1;
+        entrance[2, 5] = 1;
+        entrance[6, 5] = 1;
+        entrance[6, 4] = 1;
+        entrance[6, 3] = 1;
+        entrance[7, 2] = 1;
+        entrance[8, 1] = 1;
+
+        for (int x = 0; x < entrance.GetLength(0); x++)
+        {
+            for (int y = 0; y < entrance.GetLength(1); y++)
+            {
+                if (entrance[x, y] == 1)
+                {
+                    GameObject tile = Instantiate(wall, new Vector3(x, -y, 0), Quaternion.identity) as GameObject;
+                    tile.name = x + ", " + y;
+                }
+            }
+        }
+    }
+
     // Returns false if the coordinate does not exist on the map
     bool CoordInMapBounds(Vector2 c)
     {
@@ -201,5 +301,10 @@ public class TunnelCreator : MonoBehaviour {
             return false;
 
         return true;
+    }
+
+    bool OneIn(int chance)
+    {
+        return prng.Next(1, chance) == 1;
     }
 }

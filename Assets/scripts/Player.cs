@@ -3,7 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+<<<<<<< HEAD
 public class Player : MonoBehaviour {
+=======
+public class Player : MonoBehaviour
+{
+>>>>>>> 0cc79acd6c8bbb8159ab7f39787b39d37ced63ac
 
     public float moveSpeed;
     public float jumpForce;
@@ -19,6 +24,7 @@ public class Player : MonoBehaviour {
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2d;
     public bool canAttack;
+<<<<<<< HEAD
     [SerializeField]private int energy;
 
     // Use this for initialization
@@ -29,6 +35,20 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+=======
+    [SerializeField] private int energy;
+
+    // Use this for initialization
+    void Start()
+    {
+        boxCollider = GetComponent<BoxCollider2D>();
+        rb2d = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+>>>>>>> 0cc79acd6c8bbb8159ab7f39787b39d37ced63ac
         float x = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
         float y = Input.GetAxis("Vertical") * Time.deltaTime;
         rb2d.velocity = new Vector2(x, rb2d.velocity.y);
@@ -43,7 +63,11 @@ public class Player : MonoBehaviour {
             Debug.Log("Not Jumping");
         }
 
+<<<<<<< HEAD
         if(!jumping && Input.GetKeyDown(KeyCode.Space))
+=======
+        if (!jumping && Input.GetKeyDown(KeyCode.Space))
+>>>>>>> 0cc79acd6c8bbb8159ab7f39787b39d37ced63ac
         {
             jumping = true;
             Debug.Log("Jumping");
@@ -59,7 +83,11 @@ public class Player : MonoBehaviour {
         {
             Debug.Log("empty");
         }
+<<<<<<< HEAD
 	}
+=======
+    }
+>>>>>>> 0cc79acd6c8bbb8159ab7f39787b39d37ced63ac
 
     IEnumerator Attack()
     {
@@ -77,9 +105,17 @@ public class Player : MonoBehaviour {
     IEnumerator Jump()
     {
         canAttack = false;
+<<<<<<< HEAD
         rb2d.AddForce(new Vector2(0,jumpForce));
+=======
+        rb2d.AddForce(new Vector2(0, jumpForce));
+>>>>>>> 0cc79acd6c8bbb8159ab7f39787b39d37ced63ac
         yield return new WaitForSeconds(waitForSeconds);
         Debug.Log("no");
         canAttack = Input.GetKeyUp(KeyCode.Space);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0cc79acd6c8bbb8159ab7f39787b39d37ced63ac
