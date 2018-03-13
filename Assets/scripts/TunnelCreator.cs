@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TunnelCreator : MonoBehaviour {
+public class TunnelCreator : MonoBehaviour
+{
 
     public string seed;
     public GameObject wall;
@@ -53,7 +54,7 @@ public class TunnelCreator : MonoBehaviour {
             for (int x = 0; x < v.GetLength(0); x++)
             {
                 int place = 0;
-                if (v[x,y] == 0)
+                if (v[x, y] == 0)
                 {
                     if (currentScore == 0)
                         start = x;
@@ -112,7 +113,7 @@ public class TunnelCreator : MonoBehaviour {
 
         return sinePattern;
     }
-    
+
     // Sets up the initial array of specified length
     int[,] MakeTunnelArray(int length)
     {
@@ -174,7 +175,7 @@ public class TunnelCreator : MonoBehaviour {
     // Debugging
     void InstantiateSine(int[] sineLine)
     {
-        for(int y = 0; y < sineLine.Length; y++)
+        for (int y = 0; y < sineLine.Length; y++)
         {
             GameObject tile = Instantiate(sine, new Vector3(sineLine[y], y, 0), Quaternion.identity) as GameObject;
             tile.name = sineLine[y] + ", " + y;
@@ -206,7 +207,7 @@ public class TunnelCreator : MonoBehaviour {
     void GenerateBorders()
     {
         // Borders on sides
-        for(int i = 0; i < length + 50; i++)
+        for (int i = 0; i < length + 50; i++)
         {
             GameObject tile = Instantiate(wall, new Vector3(-1, i, 0), Quaternion.identity) as GameObject;
             tile.name = "Wall";
@@ -218,7 +219,7 @@ public class TunnelCreator : MonoBehaviour {
     // Places the exit tiles
     void GenerateExit()
     {
-        int[,] exit = new int[9,6];
+        int[,] exit = new int[9, 6];
 
         for (int x = 0; x < exit.GetLength(0); x++)
         {

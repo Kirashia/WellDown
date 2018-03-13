@@ -128,8 +128,4 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-<<<<<<< HEAD
   m_MaskInteraction: 0
-=======
-  m_MaskInteraction: 0
->>>>>>> 0cc79acd6c8bbb8159ab7f39787b39d37ced63ac

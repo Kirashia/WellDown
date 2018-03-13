@@ -44,7 +44,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1755120429955790
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +241,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fc1e069d6fec0439f18b72c0d61504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 0
+  jumpForce: 0
+  attackForce: 0
+  something: 0
+  jumping: 0
+  waitForSeconds: 0
+  weaponCooldown: 0
+  weaponEnergy: 8
+  attack: {fileID: 0}
+  canAttack: 0
+  energy: 0
 --- !u!124 &124870073460531510
 Behaviour:
   m_ObjectHideFlags: 1
