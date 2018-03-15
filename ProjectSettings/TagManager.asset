@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Phase
   - Surface
+  - Damage
+  - Stomp
+  - Projectile
   layers:
   - Default
   - TransparentFX

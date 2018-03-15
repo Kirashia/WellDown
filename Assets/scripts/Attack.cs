@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour {
 
-    float range;
+    public int threshold;
 
-	// Use this for initialization
-	void Start ()
-    {
-        StartCoroutine(Life());
-	}
+    private int count = 0;
+    private Rigidbody2D rb2d;
 
-    IEnumerator Life()
+    private void Awake()
     {
-        yield return new WaitForSeconds(range);
-        gameObject.SetActive(false);
+        rb2d = GetComponent<Rigidbody2D>();
     }
+
+    private void LateUpdate()
+    {
+        count++;
+        Debug.Log(rb2d.velocity.y + name + this.GetHashCode());
+
+        if (count > threshold)
+        {
+            Debug.Log(count);
+            Destroy(gameObject);
+        }
+    }
+
 }

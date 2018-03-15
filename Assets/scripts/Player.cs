@@ -8,25 +8,27 @@ public class Player : MonoBehaviour
 
     public float moveSpeed;
     public float jumpForce;
-    public float attackForce;
-    public float recoil;
     public float something;
-    public bool jumping = false;
+    public bool jumping = true;
     public float waitForSeconds;
-    public float weaponCooldown;
-    public int weaponEnergy = 8;
 
     public float health = 4;
     public float invFrames = 1;
     public bool dmgAble = true;
 
     public GameObject attack;
+    public float attackForce;
+    public float weaponRange;
+    public float weaponCooldown;
+    public float recoil;
+    public int weaponEnergy = 8;
 
     private bool attacking = false;
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2d;
     public bool canAttack;
     [SerializeField] private int energy;
+
 
     // Use this for initialization
     void Start()
@@ -40,6 +42,7 @@ public class Player : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
         float y = Input.GetAxis("Vertical") * Time.deltaTime;
+        canAttack = Mathf.Abs(rb2d.velocity.y) > 0;
         rb2d.velocity = new Vector2(x, rb2d.velocity.y);
 
 
@@ -52,15 +55,7 @@ public class Player : MonoBehaviour
             Debug.Log("Not Jumping");
         }
 
-        if (!jumping && Input.GetKeyDown(KeyCode.Space))
-        {
-            jumping = true;
-            Debug.Log("Jumping");
-            StartCoroutine(Jump());
-        }
-
-
-        if (jumping && Input.GetKey(KeyCode.Space) && canAttack && energy > 0 && !attacking)
+        if (jumping && Input.GetKeyDown(KeyCode.Space) && canAttack && energy > 0 && !attacking)
         {
             StartCoroutine(Attack());
         }
@@ -68,31 +63,48 @@ public class Player : MonoBehaviour
         {
             Debug.Log("empty");
         }
+
+        if (!jumping && Input.GetKeyDown(KeyCode.Space))
+        {
+            jumping = true;
+            Debug.Log("Jumping");
+            StartCoroutine(Jump());
+        }
+
+    }
+
+    IEnumerator Jump()
+    {
+        jumping = true;
+        rb2d.AddForce(new Vector2(0, jumpForce));
+        Debug.Log(rb2d.velocity);
+        do
+        {
+            yield return null;
+        }
+        while (rb2d.velocity.y != 0);
+
+        jumping = false;
     }
 
     IEnumerator Attack()
     {
         attacking = true;
-        rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
-        rb2d.AddForce(new Vector2(0, recoil));
-        Debug.Log("Attacking");
-        energy--;
+        //rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+        while (Input.GetKey(KeyCode.Space) && energy > 0)
+        {
+            rb2d.AddForce(new Vector2(0, recoil));
+            Debug.Log("Attacking");
+            energy--;
 
-        // Create the weapon projectile
-        GameObject attackInstance = Instantiate(attack, transform.position + new Vector3(0, -1, 0), Quaternion.identity) as GameObject;
-        attackInstance.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, attackForce));
+            // Create the weapon projectile
+            GameObject attackInstance = Instantiate(attack, transform.position + new Vector3(0, -1, 0), Quaternion.identity) as GameObject;
+            attackInstance.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -attackForce));
 
-        yield return new WaitForSeconds(weaponCooldown);
+            yield return new WaitForSeconds(weaponCooldown);
+        }
+
         attacking = false;
-    }
-
-    IEnumerator Jump()
-    {
-        canAttack = false;
-        rb2d.AddForce(new Vector2(0, jumpForce));
-        yield return new WaitForSeconds(waitForSeconds);
-        Debug.Log("no");
-        canAttack = Input.GetKeyUp(KeyCode.Space) || !Input.GetKey(KeyCode.Space);
     }
 
     IEnumerator TakeDamage(int dmg)
