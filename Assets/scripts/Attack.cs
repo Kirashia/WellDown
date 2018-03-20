@@ -17,11 +17,11 @@ public class Attack : MonoBehaviour {
     private void LateUpdate()
     {
         count++;
-        Debug.Log(rb2d.velocity.y + name + this.GetHashCode());
+        //Debug.Log(rb2d.velocity.y + name + this.GetHashCode());
 
         if (count > threshold)
         {
-            Debug.Log(count);
+            //Debug.Log(count);
             Destroy(gameObject);
         }
     }

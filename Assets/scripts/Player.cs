@@ -22,17 +22,19 @@ public class Player : MonoBehaviour
     public float weaponCooldown;
     public float recoil;
     public int weaponEnergy = 8;
+    public int score = 0;
 
     private bool attacking = false;
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2d;
-    public bool canAttack;
+    public bool canAttack = false;
     [SerializeField] private int energy;
 
 
     // Use this for initialization
     void Start()
     {
+        Debug.Log("new2234");
         boxCollider = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
     }
@@ -90,7 +92,7 @@ public class Player : MonoBehaviour
     IEnumerator Attack()
     {
         attacking = true;
-        //rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+        rb2d.velocity = new Vector2(rb2d.velocity.x, float.Epsilon);
         while (Input.GetKey(KeyCode.Space) && energy > 0)
         {
             rb2d.AddForce(new Vector2(0, recoil));
@@ -100,6 +102,7 @@ public class Player : MonoBehaviour
             // Create the weapon projectile
             GameObject attackInstance = Instantiate(attack, transform.position + new Vector3(0, -1, 0), Quaternion.identity) as GameObject;
             attackInstance.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -attackForce));
+            attackInstance.transform.parent = transform;
 
             yield return new WaitForSeconds(weaponCooldown);
         }
@@ -113,5 +116,13 @@ public class Player : MonoBehaviour
         health--;
         yield return new WaitForSeconds(invFrames);
         dmgAble = true;
+    }
+
+    public void Shout()
+    {
+        Debug.Log("AOSFIJDSA:LKEHFLA:WKDHLDNLKWHDOSAI");
+        Debug.Log("AOSFIJDSA:LKEHFLA:WKDHLDNLKWHDOSA1");
+        Debug.Log("AOSFIJDSA:LKEHFLA:WKDHLDNLKWHDOSA2");
+        Debug.Log("AOSFIJDSA:LKEHFLA:WKDHLDNLKWHDOSA3");
     }
 }

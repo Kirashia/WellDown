@@ -16,10 +16,16 @@ public class TunnelCreator : MonoBehaviour
     [Range(0, 100)] public int randomFill;
 
     private System.Random prng;
+    private GameObject wallHolder;
+    private GameObject platformHolder;
 
     // Main calling function
     public void CreateSineTunnel()
     {
+        // Create holder gameobjects
+        wallHolder = new GameObject("Walls");
+        platformHolder = new GameObject("Platforms");
+
         if (useRandomSeed || seed == "")
         {
             seed = Time.deltaTime.GetHashCode().ToString();
@@ -192,11 +198,13 @@ public class TunnelCreator : MonoBehaviour
                 if (tunnel[x, y] == 1)
                 {
                     GameObject tile = Instantiate(wall, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
+                    tile.transform.parent = wallHolder.transform;
                     tile.name = x + ", " + y;
                 }
                 else if (tunnel[x, y] == 2)
                 {
                     GameObject tile = Instantiate(platform, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
+                    tile.transform.parent = platformHolder.transform;
                     tile.name = x + ", " + y;
                 }
             }
@@ -209,10 +217,15 @@ public class TunnelCreator : MonoBehaviour
         // Borders on sides
         for (int i = 0; i < length + 50; i++)
         {
+            // Left
             GameObject tile = Instantiate(wall, new Vector3(-1, i, 0), Quaternion.identity) as GameObject;
             tile.name = "Wall";
+            tile.transform.parent = wallHolder.transform;
+
+            // Right
             tile = Instantiate(wall, new Vector3(9, i, 0), Quaternion.identity) as GameObject;
             tile.name = "Wall";
+            tile.transform.parent = wallHolder.transform;
         }
     }
 
@@ -249,6 +262,7 @@ public class TunnelCreator : MonoBehaviour
                 if (exit[x, y] == 1)
                 {
                     GameObject tile = Instantiate(wall, new Vector3(x, -y, 0), Quaternion.identity) as GameObject;
+                    tile.transform.parent = wallHolder.transform;
                     tile.name = x + ", " + y;
                 }
             }
@@ -286,6 +300,7 @@ public class TunnelCreator : MonoBehaviour
                 if (entrance[x, y] == 1)
                 {
                     GameObject tile = Instantiate(wall, new Vector3(x, -y, 0), Quaternion.identity) as GameObject;
+                    tile.transform.parent = wallHolder.transform;
                     tile.name = x + ", " + y;
                 }
             }

@@ -7,6 +7,9 @@ public class Enemy : MonoBehaviour {
     public GameObject player;
     public float speed;
     public float health;
+    public GameObject bigGem;
+    public GameObject smallGem;
+    public int worth;
 
     private Player playerScript;
     private Transform playerTransform;
@@ -25,8 +28,27 @@ public class Enemy : MonoBehaviour {
 
         if(health <= 0)
         {
+            // Create gems on death
+            Gemify();
             Destroy(gameObject);
         }
+    }
+
+    void Gemify()
+    {
+        int noBig = worth / 5;
+        int noSmall = worth % noBig;
+
+        for (int b = 0; b < noBig; b++)
+        {
+            Instantiate(bigGem, transform.position, Quaternion.identity);
+        }
+
+        for (int s = 0; s < noSmall; s++)
+        {
+            Instantiate(smallGem, transform.position, Quaternion.identity);
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,6 +57,10 @@ public class Enemy : MonoBehaviour {
         {
             case "Projectile":
                 health--;
+                //// Get parent of projectile - ie player
+                //GameObject player = collision.gameObject.transform.parent.gameObject;
+                //Player script = player.GetComponent<Player>();
+                //script.score++;
                 break;
         }
     }

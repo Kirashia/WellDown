@@ -9,6 +9,7 @@ TagManager:
   - Damage
   - Stomp
   - Projectile
+  - Magnet
   layers:
   - Default
   - TransparentFX
