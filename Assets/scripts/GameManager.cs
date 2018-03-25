@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour {
         player = playerGO.GetComponent<Player>();
 
         playerGO.transform.position = new Vector2(4, tunnelCreator.length + 50);
-        Debug.Log(new Vector2(4, tunnelCreator.length + 50));
 	}
 	
 	// Update is called once per frame

@@ -9,20 +9,21 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1315226824532308}
+  m_RootGameObject: {fileID: 1446393818941574}
   m_IsPrefabParent: 1
---- !u!1 &1315226824532308
+--- !u!1 &1446393818941574
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4510515452842294}
-  - component: {fileID: 212761986276256724}
-  - component: {fileID: 50368954800374558}
-  - component: {fileID: 61131389776961004}
-  - component: {fileID: 114570685180335832}
+  - component: {fileID: 4672679330298782}
+  - component: {fileID: 212316494572712424}
+  - component: {fileID: 50664679277394178}
+  - component: {fileID: 58104413920792162}
+  - component: {fileID: 58785322779500760}
+  - component: {fileID: 114586537592370192}
   m_Layer: 0
   m_Name: Smol Gem
   m_TagString: Magnet
@@ -30,26 +31,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4510515452842294
+--- !u!4 &4672679330298782
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1315226824532308}
+  m_GameObject: {fileID: 1446393818941574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.12, y: 171.33, z: 0}
+  m_LocalPosition: {x: 17.628824, y: 163.0584, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50368954800374558
+--- !u!50 &50664679277394178
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1315226824532308}
+  m_GameObject: {fileID: 1446393818941574}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -63,12 +64,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61131389776961004
-BoxCollider2D:
+--- !u!58 &58104413920792162
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1315226824532308}
+  m_GameObject: {fileID: 1446393818941574}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.17
+--- !u!58 &58785322779500760
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1446393818941574}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -76,24 +92,14 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
-    newSize: {x: 0.32, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.32, y: 0.32}
-  m_EdgeRadius: 0
---- !u!114 &114570685180335832
+  m_Radius: 0.37
+--- !u!114 &114586537592370192
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1315226824532308}
+  m_GameObject: {fileID: 1446393818941574}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a410ed454e08934f9333a13548eb970, type: 3}
@@ -104,14 +110,15 @@ MonoBehaviour:
   big: 0
   changed: 0
   threshold: 2147483647
+  exForce: 500
   radius: 5
   force: 100
---- !u!212 &212761986276256724
+--- !u!212 &212316494572712424
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1315226824532308}
+  m_GameObject: {fileID: 1446393818941574}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

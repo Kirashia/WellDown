@@ -7,12 +7,6 @@ public class Attack : MonoBehaviour {
     public int threshold;
 
     private int count = 0;
-    private Rigidbody2D rb2d;
-
-    private void Awake()
-    {
-        rb2d = GetComponent<Rigidbody2D>();
-    }
 
     private void LateUpdate()
     {

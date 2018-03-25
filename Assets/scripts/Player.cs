@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
     public int score = 0;
 
     private bool attacking = false;
-    private BoxCollider2D boxCollider;
     private Rigidbody2D rb2d;
     public bool canAttack = false;
     [SerializeField] private int energy;
@@ -35,7 +34,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         Debug.Log("new2234");
-        boxCollider = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
     }
 
@@ -43,7 +41,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         float x = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
-        float y = Input.GetAxis("Vertical") * Time.deltaTime;
         canAttack = Mathf.Abs(rb2d.velocity.y) > 0;
         rb2d.velocity = new Vector2(x, rb2d.velocity.y);
 
@@ -79,7 +76,6 @@ public class Player : MonoBehaviour
     {
         jumping = true;
         rb2d.AddForce(new Vector2(0, jumpForce));
-        Debug.Log(rb2d.velocity);
         do
         {
             yield return null;

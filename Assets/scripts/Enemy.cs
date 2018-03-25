@@ -11,13 +11,11 @@ public class Enemy : MonoBehaviour {
     public GameObject smallGem;
     public int worth;
 
-    private Player playerScript;
     private Transform playerTransform;
 
 
     // Use this for initialization
     void Start () {
-        playerScript = player.GetComponent<Player>();
         playerTransform = player.transform;
 	}
 	
@@ -37,7 +35,7 @@ public class Enemy : MonoBehaviour {
     void Gemify()
     {
         int noBig = worth / 5;
-        int noSmall = worth % noBig;
+        int noSmall = worth % 5;
 
         for (int b = 0; b < noBig; b++)
         {

@@ -28,7 +28,7 @@ public class TunnelCreator : MonoBehaviour
 
         if (useRandomSeed || seed == "")
         {
-            seed = Time.deltaTime.GetHashCode().ToString();
+            seed = Time.deltaTime.ToString();
         }
 
         prng = new System.Random(seed.GetHashCode());
@@ -36,8 +36,8 @@ public class TunnelCreator : MonoBehaviour
         // A little bit of functional (ish) programming ;) 
         InstantiateTiles(
             FixOpenAreas(
-                CarveTunnel(
-                    MakeTunnelArray(length), GetSinePattern()
+                AddSine(
+                    MakeTunnelArray(length), GetSinePattern(), GetSinePattern()
                 )
             )
         );
@@ -47,19 +47,18 @@ public class TunnelCreator : MonoBehaviour
 
     }
 
+    // Adds platforms and assigns areas to enemies
     int[,] FixOpenAreas(int[,] v)
     {
         int prevScore = 0;
         int currentScore = 0;
         int repeat = 0;
-        bool canPlace = false;
         int start = 0; ;
 
         for (int y = 0; y < v.GetLength(1) - 50; y++)
         {
             for (int x = 0; x < v.GetLength(0); x++)
             {
-                int place = 0;
                 if (v[x, y] == 0)
                 {
                     if (currentScore == 0)
@@ -68,10 +67,10 @@ public class TunnelCreator : MonoBehaviour
                     currentScore++;
                 }
             }
+
             if (prevScore == currentScore && prevScore > 0 && currentScore > 0)
             {
                 repeat++;
-                canPlace = true;
                 if (repeat > 3 && OneIn(10))
                 {
                     int randomLength = prng.Next(1, currentScore - 2);
@@ -79,17 +78,18 @@ public class TunnelCreator : MonoBehaviour
                     for (int i = 0; i < randomLength; i++)
                     {
                         v[randomStart + i, y] = 2;
-                        //GameObject tile = Instantiate(platform, new Vector3(i, y, 0), Quaternion.identity) as GameObject;
-                        //tile.name = "platform";
                     }
                     repeat = 0;
                     prevScore = 0;
+                }
+                else if (OneIn(5))
+                {
+                    // Create enemy
                 }
             }
             else
             {
                 repeat = 0;
-                canPlace = false;
             }
             prevScore = currentScore;
             currentScore = 0;
@@ -98,24 +98,46 @@ public class TunnelCreator : MonoBehaviour
         return v;
     }
 
+    // For making block grids
+    int GetScore(int[,] tunnel, int xP, int yP)
+    {
+        int score = 0;
+        for (int x = xP - 1; x <= xP + 1; x++)
+        {
+            for (int y = yP - 1; y <= yP + 1; y++)
+            {
+                if (x >=  9 || y >=  length || x < 0 || y < 0)
+                {
+                    continue;
+                }
+                else if (x == xP && y == yP)
+                {
+                    continue;
+                }
+
+                // Increments return value if there is a -1 there
+                score += (tunnel[x, y] == -1 || tunnel[x, y] == 3) ? 1 : 0;
+            }
+        }
+
+        return score;
+    }
+
     // Gets all points on a sine curve
     int[] GetSinePattern()
     {
-        int[,] tunnel = new int[9, length];
         int[] sinePattern = new int[length];
 
         // Generate random sine wave
         // Generate random coefficients
-        float coefX = (prng.Next(0, 100) < randomFill) ? 0 : prng.Next(-25, 25) * .01f;
-        float coefY = (prng.Next(0, 100) < randomFill) ? 0 : prng.Next(-25, 25) * .01f;
+        float coefX = prng.Next(-25, 25) * .01f;
+        float coefY = prng.Next(-25, 25) * .01f;
 
         // Gets x coord from mathematical function, stores it in array with y coord as index
-        for (int y = 0; y < tunnel.GetLength(1); y++)
+        for (int y = 0; y < length; y++)
         {
             sinePattern[y] = 4 + (int)Math.Floor(Mathf.Sin(y * coefX) + Mathf.Cos(y * coefY) * Mathf.Sin(y * coefX * coefY));
-            Debug.Log(sinePattern[y]);
         }
-
 
         return sinePattern;
     }
@@ -125,6 +147,7 @@ public class TunnelCreator : MonoBehaviour
     {
         int[,] tunnel = new int[9, length + 50];
 
+        // Starting platform
         tunnel[3, length + 5] = 2;
         tunnel[4, length + 5] = 2;
         tunnel[5, length + 5] = 2;
@@ -133,7 +156,7 @@ public class TunnelCreator : MonoBehaviour
         {
             for (int y = 0; y < length; y++)
             {
-                tunnel[x, y] = 1;
+                tunnel[x, y] = (prng.Next(0,100) > randomFill)? 0 : -1;
             }
         }
 
@@ -179,13 +202,58 @@ public class TunnelCreator : MonoBehaviour
     }
 
     // Debugging
-    void InstantiateSine(int[] sineLine)
+    void InstantiateSine(int[] sineLineLeft, int[] sineLineRight)
     {
-        for (int y = 0; y < sineLine.Length; y++)
+        for (int y = 0; y < sineLineLeft.Length; y++)
         {
-            GameObject tile = Instantiate(sine, new Vector3(sineLine[y], y, 0), Quaternion.identity) as GameObject;
-            tile.name = sineLine[y] + ", " + y;
+            GameObject tile = Instantiate(sine, new Vector3(sineLineLeft[y] - 4, y, 0), Quaternion.identity) as GameObject;
+            tile.name = sineLineLeft[y] + ", " + y;
         }
+
+        for (int y = 0; y < sineLineRight.Length; y++)
+        {
+            GameObject tile = Instantiate(sine, new Vector3(sineLineRight[y] + 4, y, 0), Quaternion.identity) as GameObject;
+            tile.name = sineLineRight[y] + ", " + y;
+        }
+    }
+
+    int[,] AddSine(int[,] tunnel, int[] sineLineLeft, int[] sineLineRight)
+    {
+        // Left
+        for (int y = 0; y < sineLineLeft.Length; y++)
+        {
+            try
+            {
+                // Fill from the line to the left of the screen
+                for (int x = sineLineLeft[y] - 4; x >= 0; x--)
+                {
+                    tunnel[x, y] = 1;
+                }
+            }
+            catch
+            {
+                continue;
+            }
+        }
+        
+        // right
+        for (int y = 0; y < sineLineRight.Length; y++)
+        {
+            try
+            {
+                // Fill from the line to the left of the screen
+                for (int x = sineLineRight[y] + 4; x >= 0; x++)
+                {
+                    tunnel[x, y] = 1;
+                }
+            }
+            catch
+            {
+                continue;
+            }
+        }
+
+        return tunnel;
     }
 
     // Creates the final map
@@ -206,6 +274,11 @@ public class TunnelCreator : MonoBehaviour
                     GameObject tile = Instantiate(platform, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
                     tile.transform.parent = platformHolder.transform;
                     tile.name = x + ", " + y;
+                }
+                else if (tunnel[x, y] == -1)
+                {
+                    GameObject tile = Instantiate(sine, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
+                    tile.name = "Block";
                 }
             }
         }

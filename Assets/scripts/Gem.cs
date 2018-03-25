@@ -9,6 +9,7 @@ public class Gem : MonoBehaviour {
     public bool big;
     public bool changed;
     public int threshold;
+    public float exForce;
 
     bool inside;
     public float radius = 5f;
@@ -19,6 +20,8 @@ public class Gem : MonoBehaviour {
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        Vector2 randomDirection = new Vector2(Random.value * exForce, Random.value * exForce);
+        rb2d.AddForce(randomDirection);
     }
 
     private void Update()
