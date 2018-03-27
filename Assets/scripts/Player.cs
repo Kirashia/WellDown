@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Debug.Log("new2234");
+        Debug.Log("new234");
         rb2d = GetComponent<Rigidbody2D>();
     }
 
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
         while (Input.GetKey(KeyCode.Space) && energy > 0)
         {
             rb2d.AddForce(new Vector2(0, recoil));
-            Debug.Log("Attacking");
+            //Debug.Log("Attacking");
             energy--;
 
             // Create the weapon projectile
@@ -120,5 +120,16 @@ public class Player : MonoBehaviour
         Debug.Log("AOSFIJDSA:LKEHFLA:WKDHLDNLKWHDOSA1");
         Debug.Log("AOSFIJDSA:LKEHFLA:WKDHLDNLKWHDOSA2");
         Debug.Log("AOSFIJDSA:LKEHFLA:WKDHLDNLKWHDOSA3");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.tag)
+        {
+            case "Exit":
+                GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+                gm.NewMap();
+                break;
+        }
     }
 }

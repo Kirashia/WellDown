@@ -69,7 +69,6 @@ public class Gem : MonoBehaviour {
                     script.score += 4;
                 }
                 Destroy(gameObject);
-                Debug.Log("reached");
                 break;
         }
     }

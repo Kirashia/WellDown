@@ -14,6 +14,7 @@ public class TunnelCreator : MonoBehaviour
     public int length;
     public bool useRandomSeed;
     [Range(0, 100)] public int randomFill;
+    public GameObject[] enemies;
 
     private System.Random prng;
     private GameObject wallHolder;
@@ -53,13 +54,13 @@ public class TunnelCreator : MonoBehaviour
         int prevScore = 0;
         int currentScore = 0;
         int repeat = 0;
-        int start = 0; ;
+        int start = 0;
 
         for (int y = 0; y < v.GetLength(1) - 50; y++)
         {
             for (int x = 0; x < v.GetLength(0); x++)
             {
-                if (v[x, y] == 0)
+                if (v[x, y] == 0 || v[x, y] == -1)
                 {
                     if (currentScore == 0)
                         start = x;
@@ -71,10 +72,10 @@ public class TunnelCreator : MonoBehaviour
             if (prevScore == currentScore && prevScore > 0 && currentScore > 0)
             {
                 repeat++;
+                int randomStart = prng.Next(start, start + (9 - currentScore));
                 if (repeat > 3 && OneIn(10))
                 {
                     int randomLength = prng.Next(1, currentScore - 2);
-                    int randomStart = prng.Next(start, start + (9 - currentScore));
                     for (int i = 0; i < randomLength; i++)
                     {
                         v[randomStart + i, y] = 2;
@@ -82,9 +83,20 @@ public class TunnelCreator : MonoBehaviour
                     repeat = 0;
                     prevScore = 0;
                 }
-                else if (OneIn(5))
+                if (OneIn(5) && repeat > 1)
                 {
                     // Create enemy
+                    GameObject enemy = GetRandomEnemy();
+                    GameObject instance;
+                    switch (enemy.name)
+                    {
+                        case "Blob":
+                            //Debug.Log(randomStart + ", " + y);
+                            instance = Instantiate(enemy, new Vector3(randomStart, y), Quaternion.identity) as GameObject;
+                            Debug.Log(enemy.name);
+                            instance.name = "Blob";
+                            break;
+                    }
                 }
             }
             else
@@ -96,6 +108,12 @@ public class TunnelCreator : MonoBehaviour
         }
 
         return v;
+    }
+
+    // For instantiating enemies
+    GameObject GetRandomEnemy()
+    {
+        return enemies[prng.Next(0, enemies.Length)];
     }
 
     // For making block grids
@@ -217,6 +235,7 @@ public class TunnelCreator : MonoBehaviour
         }
     }
 
+    // Creates the walls of the map using two sine curves
     int[,] AddSine(int[,] tunnel, int[] sineLineLeft, int[] sineLineRight)
     {
         // Left
@@ -275,7 +294,7 @@ public class TunnelCreator : MonoBehaviour
                     tile.transform.parent = platformHolder.transform;
                     tile.name = x + ", " + y;
                 }
-                else if (tunnel[x, y] == -1)
+                else if (tunnel[x, y] == -10)
                 {
                     GameObject tile = Instantiate(sine, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
                     tile.name = "Block";
@@ -343,6 +362,7 @@ public class TunnelCreator : MonoBehaviour
 
     }
 
+    // Adds a 50-tile high column for the player to fall through at the beginning of the map
     void GenerateEntrance()
     {
         int[,] entrance = new int[9, 6];
@@ -392,6 +412,7 @@ public class TunnelCreator : MonoBehaviour
         return true;
     }
 
+    // Random chance function
     bool OneIn(int chance)
     {
         return prng.Next(1, chance) == 1;

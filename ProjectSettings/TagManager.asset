@@ -10,6 +10,7 @@ TagManager:
   - Stomp
   - Projectile
   - Magnet
+  - Enemy
   layers:
   - Default
   - TransparentFX

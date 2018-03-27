@@ -10,19 +10,41 @@ public class Enemy : MonoBehaviour {
     public GameObject bigGem;
     public GameObject smallGem;
     public int worth;
+    public float distance;
+    public bool aggro;
 
     private Transform playerTransform;
 
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
+        player = GameObject.Find("Player");
         playerTransform = player.transform;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, playerTransform.position, step);
+
+        Vector3 playerPos = player.transform.position;
+        Vector3 pos = transform.position;
+        distance = Vector3.SqrMagnitude(playerPos - pos);
+
+        if (distance > 100)
+        {
+            UnsetAggro();
+        }
+        else if (distance <= 100)
+        {
+            SetAggro();
+        }
+
+        if (aggro)
+        {
+            // Move
+            float step = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(pos, playerPos, step);
+        }
 
         if(health <= 0)
         {
@@ -49,6 +71,16 @@ public class Enemy : MonoBehaviour {
 
     }
 
+    void SetAggro()
+    {
+        aggro = true;
+    }
+
+    void UnsetAggro()
+    {
+        aggro = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.tag)
@@ -62,4 +94,6 @@ public class Enemy : MonoBehaviour {
                 break;
         }
     }
+
+
 }

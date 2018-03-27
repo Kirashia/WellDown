@@ -27,4 +27,9 @@ public class GameManager : MonoBehaviour {
             Debug.Log("Game over");
         }
 	}
+
+    public void NewMap()
+    {
+        Debug.Log("))");
+    }
 }

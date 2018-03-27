@@ -115,6 +115,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114437233657208170, guid: a403edca3fb652b4898143f605ff37ec,
+        type: 2}
+      propertyPath: enemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4711805500934270, guid: a403edca3fb652b4898143f605ff37ec, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -166,6 +171,12 @@ Prefab:
       propertyPath: randomFill
       value: 75
       objectReference: {fileID: 0}
+    - target: {fileID: 114437233657208170, guid: a403edca3fb652b4898143f605ff37ec,
+        type: 2}
+      propertyPath: enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 1037955250880288, guid: 3caa66d7aa1be464c8c5015f8a61eae1,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a403edca3fb652b4898143f605ff37ec, type: 2}
   m_IsPrefabParent: 0
@@ -216,6 +227,11 @@ Prefab:
     - target: {fileID: 1879296055906552, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304326596161752, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b,
+        type: 2}
+      propertyPath: moveSpeed
+      value: 350
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
