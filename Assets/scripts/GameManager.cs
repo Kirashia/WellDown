@@ -28,6 +28,11 @@ public class GameManager : MonoBehaviour {
         }
 	}
 
+    public void EndGame()
+    {
+        Debug.Log("End game");
+    }
+
     public void NewMap()
     {
         Debug.Log("))");

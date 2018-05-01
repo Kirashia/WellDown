@@ -159,7 +159,7 @@ Prefab:
       objectReference: {fileID: 916650680}
     - target: {fileID: 1869551631022966, guid: a403edca3fb652b4898143f605ff37ec, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114437233657208170, guid: a403edca3fb652b4898143f605ff37ec,
         type: 2}
@@ -189,11 +189,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4036101673699974, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.25
+      value: 1.38
       objectReference: {fileID: 0}
     - target: {fileID: 4036101673699974, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 170.59
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4036101673699974, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
       propertyPath: m_LocalPosition.z
@@ -217,7 +217,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4036101673699974, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 58926110133480734, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b,
         type: 2}
@@ -233,8 +233,68 @@ Prefab:
       propertyPath: moveSpeed
       value: 350
       objectReference: {fileID: 0}
+    - target: {fileID: 50641728761401090, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b,
+        type: 2}
+      propertyPath: m_GravityScale
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304326596161752, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b,
+        type: 2}
+      propertyPath: jumping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036101673699974, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036101673699974, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &432605674
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4644390700320436, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1.2745986
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644390700320436, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -2.0878403
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644390700320436, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644390700320436, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644390700320436, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644390700320436, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644390700320436, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644390700320436, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &916650680 stripped
 GameObject:

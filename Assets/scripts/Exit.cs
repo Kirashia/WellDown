@@ -4,8 +4,25 @@ using UnityEngine;
 
 public class Exit : MonoBehaviour {
 
-	public void NewMap()
+    private GameManager gm;
+
+    private void Start()
+    {
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
+    public void NewMap()
     {
         Debug.Log("test");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.tag)
+        {
+            case "Player":
+                gm.EndGame();
+                break;
+        }
     }
 }

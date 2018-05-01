@@ -5,7 +5,7 @@ using UnityEngine;
 public class Gem : MonoBehaviour {
 
     public float speed;
-    public Player player;
+    public GameObject player;
     public bool big;
     public bool changed;
     public int threshold;
@@ -54,12 +54,13 @@ public class Gem : MonoBehaviour {
         {
             case "Magnet":
                 inside = true;
+                player = collision.gameObject.transform.gameObject;
                 break;
 
             case "Player":
 
                 // Get parent of projectile - ie player
-                GameObject player = collision.gameObject.transform.gameObject;
+                player = collision.gameObject.transform.gameObject;
                 Player script = player.GetComponent<Player>();
                 script.score++;
 

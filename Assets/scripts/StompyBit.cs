@@ -19,6 +19,7 @@ public class StompyBit : MonoBehaviour {
                 Rigidbody2D body = collision.gameObject.GetComponent<Rigidbody2D>();
                 body.velocity = new Vector2(body.velocity.x, 0);
                 body.AddForce(new Vector2(0,500));
+                collision.GetComponent<Player>().jumping = true;
                 parent.GetComponent<Enemy>().health--;
                 break;
         }

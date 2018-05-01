@@ -53,6 +53,10 @@ public class Player : MonoBehaviour
             energy = weaponEnergy;
             Debug.Log("Not Jumping");
         }
+        else
+        {
+            jumping = true;
+        }
 
         if (jumping && Input.GetKeyDown(KeyCode.Space) && canAttack && energy > 0 && !attacking)
         {
@@ -74,13 +78,12 @@ public class Player : MonoBehaviour
 
     IEnumerator Jump()
     {
-        jumping = true;
-        rb2d.AddForce(new Vector2(0, jumpForce));
         do
         {
+            rb2d.AddForce(new Vector2(0, jumpForce));
             yield return null;
         }
-        while (rb2d.velocity.y != 0);
+        while (rb2d.velocity.y != 0 && Input.GetKey(KeyCode.Space));
 
         jumping = false;
     }
@@ -91,7 +94,8 @@ public class Player : MonoBehaviour
         rb2d.velocity = new Vector2(rb2d.velocity.x, float.Epsilon);
         while (Input.GetKey(KeyCode.Space) && energy > 0)
         {
-            rb2d.AddForce(new Vector2(0, recoil));
+            //rb2d.AddForce(new Vector2(0, recoil));
+            rb2d.velocity = new Vector2(rb2d.velocity.x, float.Epsilon);
             //Debug.Log("Attacking");
             energy--;
 
