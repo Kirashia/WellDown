@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour {
     public int worth;
     public float distance;
     public bool aggro;
+    public int aggroRange;
 
     private Transform playerTransform;
 
@@ -30,11 +31,11 @@ public class Enemy : MonoBehaviour {
         Vector3 pos = transform.position;
         distance = Vector3.SqrMagnitude(playerPos - pos);
 
-        if (distance > 100)
+        if (distance > aggroRange)
         {
             UnsetAggro();
         }
-        else if (distance <= 100)
+        else if (distance <= aggroRange)
         {
             SetAggro();
         }

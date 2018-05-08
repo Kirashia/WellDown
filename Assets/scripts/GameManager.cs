@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     public GameObject playerGO;
+    public static GameManager instance = null;
 
     private Player player;
     private TunnelCreator tunnelCreator;
@@ -12,6 +14,19 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        // Check if instance already exists
+        if (instance == null)
+        {
+            // if not, set instance to this
+            instance = this;
+        }
+        // If instance already exists and it's not this:
+        else if (instance != this)
+        {
+            // Then destroy this
+            Destroy(gameObject);
+        }
+
         tunnelCreator = GetComponent<TunnelCreator>();
         tunnelCreator.CreateSineTunnel();
         player = playerGO.GetComponent<Player>();
@@ -31,10 +46,11 @@ public class GameManager : MonoBehaviour {
     public void EndGame()
     {
         Debug.Log("End game");
+        NewMap();
     }
 
     public void NewMap()
     {
-        Debug.Log("))");
+        SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
 }

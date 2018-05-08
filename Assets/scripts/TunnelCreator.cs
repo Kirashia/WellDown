@@ -18,6 +18,7 @@ public class TunnelCreator : MonoBehaviour
 
     private System.Random prng;
     private GameObject wallHolder;
+    private GameObject enemyHolder;
     private GameObject platformHolder;
 
     // Main calling function
@@ -25,6 +26,7 @@ public class TunnelCreator : MonoBehaviour
     {
         // Create holder gameobjects
         wallHolder = new GameObject("Walls");
+        enemyHolder = new GameObject("Enemies");
         platformHolder = new GameObject("Platforms");
 
         if (useRandomSeed || seed == "")
@@ -38,7 +40,9 @@ public class TunnelCreator : MonoBehaviour
         InstantiateTiles(
             FixOpenAreas(
                 AddSine(
-                    MakeTunnelArray(length), GetSinePattern(), GetSinePattern()
+                    MakeTunnelArray(length),
+                    GetSinePattern(), 
+                    GetSinePattern()
                 )
             )
         );
@@ -69,7 +73,7 @@ public class TunnelCreator : MonoBehaviour
                 }
             }
 
-            if (prevScore == currentScore && prevScore > 0 && currentScore > 0)
+            if ((prevScore == currentScore || prevScore == currentScore -1 || prevScore == currentScore +1) && prevScore > 0 && currentScore > 0)
             {
                 repeat++;
                 int randomStart = prng.Next(start, start + (9 - currentScore));
@@ -92,7 +96,8 @@ public class TunnelCreator : MonoBehaviour
                     {
                         case "Blob":
                             //Debug.Log(randomStart + ", " + y);
-                            instance = Instantiate(enemy, new Vector3(randomStart, y), Quaternion.identity) as GameObject;
+                            randomStart = prng.Next(start, start + (currentScore));
+                            instance = Instantiate(enemy, new Vector3(randomStart, y), Quaternion.identity, enemyHolder.transform) as GameObject;
                             Debug.Log(enemy.name);
                             instance.name = "Blob";
                             break;

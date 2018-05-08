@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b960ce6b7ef0343bc8444d47908bce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerGO: {fileID: 0}
+  playerGO: {fileID: 1879296055906552, guid: ec7cee1d7c2dbaa4bb5a53c88ef2842b, type: 2}
 --- !u!114 &114437233657208170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,4 +71,6 @@ MonoBehaviour:
   platform: {fileID: 1837286421129388, guid: 5517f01f51a9ae240a5e6cdf4a95217c, type: 2}
   length: 200
   useRandomSeed: 0
-  randomFill: 30
+  randomFill: 75
+  enemies:
+  - {fileID: 1037955250880288, guid: 3caa66d7aa1be464c8c5015f8a61eae1, type: 2}

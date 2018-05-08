@@ -8,7 +8,7 @@ public class Exit : MonoBehaviour {
 
     private void Start()
     {
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gm = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     public void NewMap()

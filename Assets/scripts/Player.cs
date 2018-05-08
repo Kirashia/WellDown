@@ -6,6 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    public static Player instance = null;
+
     public float moveSpeed;
     public float jumpForce;
     public float something;
@@ -25,9 +27,10 @@ public class Player : MonoBehaviour
     public int score = 0;
 
     private bool attacking = false;
-    private Rigidbody2D rb2d;
     public bool canAttack = false;
     [SerializeField] private int energy;
+
+    private Rigidbody2D rb2d;
 
 
     // Use this for initialization
@@ -50,7 +53,6 @@ public class Player : MonoBehaviour
         {
             jumping = false;
             canAttack = false;
-            energy = weaponEnergy;
             Debug.Log("Not Jumping");
         }
         else
@@ -78,13 +80,15 @@ public class Player : MonoBehaviour
 
     IEnumerator Jump()
     {
+        energy = weaponEnergy;
+        rb2d.AddForce(new Vector2(0, jumpForce));
         do
         {
-            rb2d.AddForce(new Vector2(0, jumpForce));
             yield return null;
         }
-        while (rb2d.velocity.y != 0 && Input.GetKey(KeyCode.Space));
+        while (rb2d.velocity.y > 0 && Input.GetKey(KeyCode.Space));
 
+        rb2d.velocity = new Vector2(rb2d.velocity.x, float.Epsilon);
         jumping = false;
     }
 
@@ -95,7 +99,7 @@ public class Player : MonoBehaviour
         while (Input.GetKey(KeyCode.Space) && energy > 0)
         {
             //rb2d.AddForce(new Vector2(0, recoil));
-            rb2d.velocity = new Vector2(rb2d.velocity.x, float.Epsilon);
+            rb2d.velocity = new Vector2(rb2d.velocity.x, 1);
             //Debug.Log("Attacking");
             energy--;
 
