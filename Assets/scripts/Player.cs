@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int energy;
 
     private Rigidbody2D rb2d;
+    private Animator anim;
 
 
     // Use this for initialization
@@ -38,6 +39,9 @@ public class Player : MonoBehaviour
     {
         Debug.Log("new234");
         rb2d = GetComponent<Rigidbody2D>();
+        anim = transform.GetComponentInChildren<Animator>();
+
+        Debug.Log(anim);
     }
 
     // Update is called once per frame
@@ -45,18 +49,36 @@ public class Player : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
         canAttack = Mathf.Abs(rb2d.velocity.y) > 0;
-        rb2d.velocity = new Vector2(x, rb2d.velocity.y);
 
+        if (x > 0)
+        {
+            anim.SetBool("moveL", false);
+            anim.SetBool("moveR", true);
+        }
+        else if (x < 0)
+        {
+            anim.SetBool("moveL", true);
+            anim.SetBool("moveR", false);
+        }
+        else
+        {
+            anim.SetBool("moveL", false);
+            anim.SetBool("moveR", false);
+        }
+
+        rb2d.velocity = new Vector2(x, rb2d.velocity.y);
 
         // Jump
         if (rb2d.velocity.y == 0)
         {
+            anim.SetBool("jump", false);
             jumping = false;
             canAttack = false;
             Debug.Log("Not Jumping");
         }
         else
         {
+            anim.SetBool("jump", true);
             jumping = true;
         }
 
