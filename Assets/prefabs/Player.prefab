@@ -315,7 +315,7 @@ MonoBehaviour:
   attack: {fileID: 1483208318251212, guid: 64e91de4d66e66b4eb0fec96b3551cd1, type: 2}
   attackForce: 1000
   weaponRange: 0.5
-  weaponCooldown: 0.15
+  weaponCooldown: 0.14
   recoil: 375
   weaponEnergy: 8
   score: 0

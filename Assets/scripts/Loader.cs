@@ -7,11 +7,26 @@ public class Loader : MonoBehaviour
     public GameObject gameManager;          //GameManager prefab to instantiate.
     public GameObject player;         //SoundManager prefab to instantiate.
 
+    public static Loader instance = null;
+
     public bool testMap;
     public bool testPlayer;
 
     void Awake()
     {
+        // Check if instance already exists
+        if (instance == null)
+        {
+            // if not, set instance to this
+            instance = this;
+        }
+        // If instance already exists and it's not this:
+        else if (instance != this)
+        {
+            // Then destroy this
+            Destroy(gameObject);
+        }
+
         if (Player.instance == null && !testMap)
         {
             //Instantiate gameManager prefab

@@ -37,6 +37,20 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        // Check if instance already exists
+        if (instance == null)
+        {
+            // if not, set instance to this
+            instance = this;
+        }
+        // If instance already exists and it's not this:
+        else if (instance != this)
+        {
+            // Then destroy this
+            Destroy(gameObject);
+        }
+
+
         Debug.Log("new234");
         rb2d = GetComponent<Rigidbody2D>();
         anim = transform.GetComponentInChildren<Animator>();

@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
 
         playerGO.transform.position = new Vector2(4, tunnelCreator.length + 50);
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
     {
@@ -42,6 +42,15 @@ public class GameManager : MonoBehaviour {
             Debug.Log("Game over");
         }
 	}
+
+    public void thign()
+    {
+        tunnelCreator = GetComponent<TunnelCreator>();
+        tunnelCreator.CreateSineTunnel();
+        player = playerGO.GetComponent<Player>();
+
+        playerGO.transform.position = new Vector2(4, tunnelCreator.length + 50);
+    }
 
     public void EndGame()
     {
