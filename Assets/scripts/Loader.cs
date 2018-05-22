@@ -42,5 +42,9 @@ public class Loader : MonoBehaviour
             gm.name = "Game Manager";
             DontDestroyOnLoad(gm);
         }
+        else if(GameManager.instance != null && !testPlayer)
+        {
+            GameObject.Find("Game Manager").GetComponent<GameManager>().thign();
+        }
     }
 }

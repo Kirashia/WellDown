@@ -190,7 +190,7 @@ MonoBehaviour:
   health: 1
   bigGem: {fileID: 1368275451970486, guid: e8f941ad6a8996243a39371f67a72435, type: 2}
   smallGem: {fileID: 1446393818941574, guid: 8e26c961be241cb4caaefa35bca5aeeb, type: 2}
-  worth: 5
+  worth: 2
   distance: 0
   aggro: 0
   aggroRange: 150
